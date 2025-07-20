@@ -1,0 +1,40 @@
+@startuml
+!theme plain
+skinparam defaultFontName "Noto Sans CJK JP Regular"
+
+title ウェブアプリケーション構成図
+
+package "フロントエンド" {
+  [ブラウザ] as browser
+  [React App] as react
+}
+
+package "バックエンド" {
+  [APIゲートウェイ] as api
+  [認証サービス] as auth
+  [ビジネスロジック] as business
+}
+
+package "データ層" {
+  database "PostgreSQL" as db
+  database "Redis" as cache
+}
+
+browser -> react : ユーザー操作
+react -> api : API呼び出し
+api -> auth : 認証確認
+api -> business : 業務処理
+business -> db : データ操作
+business -> cache : キャッシュ
+
+note right of auth
+  JWT トークンによる
+  認証システム
+end note
+
+note bottom of db
+  メインデータベース
+  ユーザー情報・業務データ
+end note
+
+@enduml

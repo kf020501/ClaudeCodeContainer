@@ -10,6 +10,10 @@ CLAUDE_JSON := ~/.claude.json
 .PHONY: all
 all: build
 
+.PHONY: setup
+setup: ## プロジェクトディレクトリの作成
+	mkdir -p bin src docs tests config scripts logs tmp
+
 # Docker イメージをビルド
 build:
 	@echo "Ensure ~/.claude exists…"
